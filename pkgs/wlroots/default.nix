@@ -12,7 +12,7 @@ in stdenv.mkDerivation rec {
   name = "${pname}-${version}";
 
   src = fetchFromGitHub {
-    owner = "swaywm";
+    owner = "bbigras";
     repo = "wlroots";
     rev = metadata.rev;
     sha256 = metadata.sha256;
