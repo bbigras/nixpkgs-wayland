@@ -11,10 +11,21 @@
 
 let
   metadata = import ./metadata.nix;
+
+  mpd_clientlibWithDebug = mpd_clientlib.overrideAttrs (oldAttrs: rec {
+    separateDebugInfo = true;
+    # dontStrip = true;
+    NIX_CFLAGS_COMPILE = "-O0";
+  });
+
 in
 stdenv.mkDerivation rec {
   name = "waybar-${version}";
   version = metadata.rev;
+
+  separateDebugInfo = true;
+  # dontStrip = true;
+  NIX_CFLAGS_COMPILE = "-O0";
 
   src = fetchFromGitHub {
     owner = "Alexays";
@@ -30,7 +41,7 @@ stdenv.mkDerivation rec {
     git fmt jsoncpp libdbusmenu-gtk3
     glib
     spdlog
-    mpd_clientlib
+    mpd_clientlibWithDebug
   ];
   mesonFlags = [
     "-Dauto_features=enabled"
